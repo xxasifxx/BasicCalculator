@@ -14,6 +14,12 @@
 #include <string>
 #include <sstream>
 
+struct TwoVals
+{
+	std::string Val1;
+	std::string Val2;
+};
+
 double add(double x, double y);
 
 double subtract(double x, double y);
@@ -24,18 +30,20 @@ double divide(double x, double y);
 
 double exponent(double x, double y);
 
+void numTest(std::string s);
+
 std::string dub2str(double z);
 
 double str2dub(std::string s);
 
-void checkAddition(std::string s);
+TwoVals checkAddition(TwoVals s);
 
-void checkSubtraction(std::string s);
+TwoVals checkSubtraction(TwoVals s);
 
-void checkMultiplication(std::string s);
+TwoVals checkMultiplication(TwoVals s);
 
-void checkDivision(std::string s);
+TwoVals checkDivision(TwoVals s);
 
-void checkExponent(std::string s);
+TwoVals checkExponent(TwoVals s);
 
 #endif //PCH_H

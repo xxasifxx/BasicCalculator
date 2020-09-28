@@ -5,6 +5,7 @@
 
 using namespace std;
 
+
 double add(double x, double y)
 {
 	double z = x + y;
@@ -28,6 +29,36 @@ double exponent(double x, double y)
 	return z;
 }
 
+void numTest(string s)
+{
+	try
+	{
+		char ch;
+		int count = 0;
+		for (size_t i = 0; i < s.length(); i++)
+		{
+			ch = s.at(i);
+			/*
+			if (ch > *"9" || ch < *"0" || ch != *".")
+			{
+				throw "Non numeric input";
+			}
+			*/
+			if (ch == *".")
+			{
+				count++;
+			}
+			if (count > 1)
+			{
+				throw "Too many periods";
+			}
+		}
+	}
+	catch (const char* msg) {
+		cout << endl;
+		cerr << msg << endl;
+	}
+}
 string dub2str(double z)
 {
 	stringstream ss;
@@ -39,80 +70,86 @@ string dub2str(double z)
 
 double str2dub(string s)
 {
+	numTest(s);
 	stringstream ss(s);
 	double z;
 	ss >> z;
 	return z;
 }
-void checkAddition(string s)
+TwoVals Finder(string s, string t)
 {
-	size_t pos = s.find("+");
+	TwoVals Found = { s, "" };
+	size_t pos = s.find(t);
 	if (pos != string::npos)
 	{
 		string first = s.substr(0, pos);
 		string second = s.substr(pos + 1, s.length());
-		double x = str2dub(first);
-		double y = str2dub(second);
+		Found = { first, second };
+	}
+	return Found;
+}
+TwoVals checkAddition(TwoVals s)
+{
+	TwoVals result = s;
+	result = Finder(result.Val1, "+");
+	if (result.Val2 != "")
+	{
+		double x = str2dub(result.Val1);
+		double y = str2dub(result.Val2);
 		double z = add(x, y);
-		s = dub2str(z);
-		cout << "= " << s << endl;
+		result = { dub2str(z), "" };
 	}
+	return result;
 }
-void checkSubtraction(string s)
+TwoVals checkSubtraction(TwoVals s)
 {
-	size_t pos = s.find("-");
-	if (pos != string::npos)
+	TwoVals result = s;
+	result = Finder(result.Val1, "-");
+	if (result.Val2 != "")
 	{
-		string first = s.substr(0, pos);
-		string second = s.substr(pos + 1, s.length());
-		double x = str2dub(first);
-		double y = str2dub(second);
+		double x = str2dub(result.Val1);
+		double y = str2dub(result.Val2);
 		double z = subtract(x, y);
-		s = dub2str(z);
-		cout << "= " << s << endl;
+		result = { dub2str(z), "" };
 	}
+	return result;
 }
-void checkMultiplication(string s)
+TwoVals checkMultiplication(TwoVals s)
 {
-	size_t pos = s.find("*");
-	if (pos != string::npos)
+	TwoVals result = s;
+	result = Finder(result.Val1, "*");
+	if (result.Val2 != "")
 	{
-		string first = s.substr(0, pos);
-		string second = s.substr(pos + 1, s.length());
-		double x = str2dub(first);
-		double y = str2dub(second);
+		double x = str2dub(result.Val1);
+		double y = str2dub(result.Val2);
 		double z = multiply(x, y);
-		s = dub2str(z);
-		cout << "= " << s << endl;
+		result = { dub2str(z), "" };
 	}
+	return result;
 }
-void checkDivision(string s)
+TwoVals checkDivision(TwoVals s)
 {
-	size_t pos = s.find("/");
-	if (pos != string::npos)
+	TwoVals result = s;
+	result = Finder(result.Val1, "/");
+	if (result.Val2 != "")
 	{
-		string first = s.substr(0, pos);
-		string second = s.substr(pos + 1, s.length());
-		double x = str2dub(first);
-		double y = str2dub(second);
+		double x = str2dub(result.Val1);
+		double y = str2dub(result.Val2);
 		double z = divide(x, y);
-		s = dub2str(z);
-		cout << "= " << s << endl;
+		result = { dub2str(z), "" };
 	}
+	return result;
 }
-void checkExponent(string s)
+TwoVals checkExponent(TwoVals s)
 {
-	size_t pos = s.find("^");
-	if (pos != string::npos)
+	TwoVals result = s;
+	result = Finder(result.Val1, "^");
+	if (result.Val2 != "")
 	{
-		string first = s.substr(0, pos);
-		string second = s.substr(pos + 1, s.length());
-		double x = str2dub(first);
-		double y = str2dub(second);
+		double x = str2dub(result.Val1);
+		double y = str2dub(result.Val2);
 		double z = exponent(x, y);
-		s = dub2str(z);
-		cout << "= " << s << endl;
+		result = { dub2str(z), "" };
 	}
+	return result;
 }
-
-// In general, ignore this file, but keep it around if you are using pre-compiled headers.

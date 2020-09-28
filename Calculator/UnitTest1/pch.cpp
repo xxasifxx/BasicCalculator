@@ -33,10 +33,10 @@ void numTest(string s)
 {
 	try
 	{
-		char ch;
 		int count = 0;
 		for (size_t i = 0; i < s.length(); i++)
 		{
+			char ch;
 			ch = s.at(i);
 			/*
 			if (ch > *"9" || ch < *"0" || ch != *".")
